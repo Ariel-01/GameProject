@@ -4,35 +4,28 @@ using UnityEngine;
 
 public class scrPointerFunctionality : MonoBehaviour
 {
-
- 
-
+    private enum PointerState { IDLE = 0, MOVING = 1, ACTION = 2 };
+    private PointerState pointerState;
+    const int MOVE_DIST = 1;
+    const float POINTER_SPEED = 3.0f;
     // Use this for initialization
     void Start()
     {
- 
+        pointerState = PointerState.IDLE;
     }
 
     //MOVEMENT
-    IEnumerator MovePlayer(int dir, char axis)
+    IEnumerator MovePlayer(int dir)
     {
-        moveState = PlayerMoveState.MOVING;
+        pointerState = PointerState.MOVING;
         Vector2 incrementVector = new Vector2(0, 0);
         float fraction = 0;
-        //Changes sprite direction and assigns direction vector
-        if (dir > 0 && axis == 'x')
-        {
-            incrementVector = new Vector2(MOVE_DIST, 0);
-        }
-        else if (dir < 0 && axis == 'x')
-        {
-            incrementVector = new Vector2(-MOVE_DIST, 0);
-        }
-        else if (dir > 0 && axis == 'y')
+
+        if (dir > 0)
         {
             incrementVector = new Vector2(0, MOVE_DIST);
         }
-        else if (dir < 0 && axis == 'y')
+        else if (dir < 0)
         {
             incrementVector = new Vector2(0, -MOVE_DIST);
         }
@@ -43,13 +36,13 @@ public class scrPointerFunctionality : MonoBehaviour
 
         do
         {
-            fraction += Time.deltaTime * MOVE_SPEED;
+            fraction += Time.deltaTime * POINTER_SPEED;
             transform.position = Vector2.Lerp(startPos, targetPos, fraction);
             yield return null;
         }
-        while (fraction < 1 && moveState == PlayerMoveState.MOVING);
+        while (fraction < 1 && pointerState == PointerState.MOVING);
 
-        moveState = PlayerMoveState.IDLE;
+        pointerState = PointerState.IDLE;
         yield return new WaitForSeconds(0.25f);
     }
 
@@ -58,35 +51,18 @@ public class scrPointerFunctionality : MonoBehaviour
     {
         //checking for input
         Vector2 moveInput = Vector2.zero;
-        moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
 
-        switch (moveState)
+        switch (pointerState)
         {
-            case PlayerMoveState.IDLE:
-                if (moveInput.x == 1 || moveInput.x == -1)
+            case PointerState.IDLE:
+                if (moveInput.y == 1 || moveInput.y == -1)
                 {
-                    bool allowMove = currentFloor.canMove("x", (int)moveInput.x, playerSize);
-                    if (allowMove)
-                    {
-                        transform.eulerAngles = new Vector3(0f, 0f, 90f) * -1 * moveInput.x;
-
-                        StartCoroutine(MovePlayer((int)moveInput.x, 'x'));
-                    }
-                }
-                else if (moveInput.y == 1 || moveInput.y == -1)
-                {
-
-                    bool allowMove = currentFloor.canMove("y", (int)moveInput.y, playerSize);
-                    if (allowMove)
-                    {
-                        if (moveInput.y == 1) transform.eulerAngles = new Vector3(0f, 0f, 0f);
-                        if (moveInput.y == -1) transform.eulerAngles = new Vector3(0f, 0f, 180f);
-                        StartCoroutine(MovePlayer((int)moveInput.y, 'y'));
-                    }
+                    StartCoroutine(MovePlayer((int)moveInput.y));
                 }
                 break;
         }
+
     }
 
 
