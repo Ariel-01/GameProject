@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\scrCameraFollow.cs" />
     <Compile Include="Assets\Scripts\scrMouseFollow.cs" />
+    <Compile Include="Assets\Scripts\scrMovementUnitBasic.cs" />
     <Compile Include="Assets\Scripts\scrPointerFunctionality.cs" />
     <Compile Include="Assets\Scripts\scrTiledBackground.cs" />
     <Reference Include="UnityEditor.StandardEvents">
