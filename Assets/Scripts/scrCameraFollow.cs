@@ -12,18 +12,16 @@ public class scrCameraFollow : MonoBehaviour
     void Update()
     {
         Vector3 newPos = transform.position;
-      
-        if (Input.mousePosition.x >= Screen.width + PAN_THICKNESS)
-        {
-            newPos.x += PAN_SPEED * Time.deltaTime;
-        }
         if (Input.mousePosition.x <= PAN_THICKNESS)
         {
             newPos.x -= PAN_SPEED * Time.deltaTime;
         }
-
+        if (Input.mousePosition.x >= Screen.width - PAN_THICKNESS)
+        { 
+            newPos.x += PAN_SPEED * Time.deltaTime;
+        }
+        
         newPos.x = Mathf.Clamp(newPos.x ,- MAX_X,MAX_X);
-        newPos.y = Mathf.Clamp(newPos.y, -MAX_Y, MAX_Y);
         transform.position = newPos;
         
     }

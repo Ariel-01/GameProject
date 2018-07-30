@@ -10,9 +10,9 @@ public class scrPointerFunctionality : MonoBehaviour
     const float POINTER_SPEED = 3.0f;
     const float DELAY = 3.0f;
 
-    public GameObject testUnit; //P U B L I C (end my suffering)
     private bool canCreate = true;
     private float timer;
+    public GameObject testUnit; 
     // Use this for initialization
     void Start()
     {
@@ -87,7 +87,7 @@ public class scrPointerFunctionality : MonoBehaviour
             if(canCreate)
             {
                 //create unit
-                Instantiate(testUnit, transform.position, transform.rotation);
+                Instantiate(testUnit,transform.position,transform.rotation);
                 canCreate = false;
             }
         }
