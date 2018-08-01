@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\scrMovementUnitBasic.cs" />
     <Compile Include="Assets\Scripts\scrPointerFunctionality.cs" />
     <Compile Include="Assets\Scripts\scrRepeatedBackground.cs" />
+    <Compile Include="Assets\Scripts\scrScrollingBackground.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Ryan/Documents/GameProjectRepo/GameProject/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

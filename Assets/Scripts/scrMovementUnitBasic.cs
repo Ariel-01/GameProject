@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class scrMovementUnitBasic : MonoBehaviour {
 
-    const int MOVE_DIST = 1; //the distance the unit can move per unit time
-    private float speed = 3.0f;
+    const int MOVE_DIST = 14; //the distance the unit can move per unit time
+    private float speed = 0.2f;
     private enum UnitState { MOVING = 0, ATTACKING = 1 };
     private enum UnitOwner { PLAYER = 0, ENEMY = 1};
 
@@ -36,7 +36,6 @@ public class scrMovementUnitBasic : MonoBehaviour {
 
         Vector2 startPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 targetPos = startPos + incrementVector;
-        Debug.Log("");
         do
         {
             fraction += Time.deltaTime * speed;
@@ -45,6 +44,8 @@ public class scrMovementUnitBasic : MonoBehaviour {
             yield return null;
         }
         while (fraction < 1);
+
+        if (fraction >= 1) Destroy(this,0);
 
         yield return new WaitForSeconds(0.25f);
     }
