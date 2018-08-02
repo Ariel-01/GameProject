@@ -10,9 +10,15 @@ public class scrPointerFunctionality : MonoBehaviour
     const float POINTER_SPEED = 3.0f;
     const float DELAY = 3.0f;
 
+    public float CAP_TOP;
+    public float CAP_BOT;
+    public GameObject testUnit; 
+
     private bool canCreate = true;
     private float timer;
-    public GameObject testUnit; 
+    private bool canMoveUp = true;
+    private bool canMoveDown = true;
+
     // Use this for initialization
     void Start()
     {
@@ -31,7 +37,8 @@ public class scrPointerFunctionality : MonoBehaviour
         {
             incrementVector = new Vector2(0, MOVE_DIST);
         }
-        else if (dir < 0)
+        
+        if (dir < 0)
         {
             incrementVector = new Vector2(0, -MOVE_DIST);
         }
@@ -55,6 +62,25 @@ public class scrPointerFunctionality : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //checking the pointer is below pos or above pos
+        Vector3 checkPos = transform.position;
+        if (checkPos.y >= CAP_TOP)
+        {
+            checkPos.y = CAP_TOP;
+            transform.position = checkPos;
+            canMoveUp = false;
+        }
+        else if (checkPos.y <= CAP_BOT)
+        {
+            checkPos.y = CAP_BOT;
+            transform.position = checkPos;
+            canMoveDown = false;
+        }
+        else {
+            canMoveDown = true;
+            canMoveUp = true;
+        }
+
         //checking for input
         Vector2 moveInput = Vector2.zero;
         moveInput.y = Input.GetAxisRaw("Vertical");
@@ -72,7 +98,12 @@ public class scrPointerFunctionality : MonoBehaviour
         switch (pointerState)
         {
             case PointerState.IDLE:
-                if (moveInput.y == 1 || moveInput.y == -1)
+                if (moveInput.y == 1 && canMoveUp)
+                {
+                    StartCoroutine(MovePlayer((int)moveInput.y));
+                }
+
+                if (moveInput.y == -1 && canMoveDown)
                 {
                     StartCoroutine(MovePlayer((int)moveInput.y));
                 }
