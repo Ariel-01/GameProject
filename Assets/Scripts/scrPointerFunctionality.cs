@@ -64,6 +64,7 @@ public class scrPointerFunctionality : MonoBehaviour
     {
         //checking the pointer is below pos or above pos
         Vector3 checkPos = transform.position;
+
         if (checkPos.y >= CAP_TOP)
         {
             checkPos.y = CAP_TOP;
@@ -114,11 +115,12 @@ public class scrPointerFunctionality : MonoBehaviour
         float checkSpace = Input.GetAxisRaw("Jump");
 
         if (checkSpace == 1)
-        {
+        { 
             if(canCreate)
             {
                 //create unit
-                Instantiate(testUnit,transform.position,transform.rotation);
+                Vector3 newPosition = this.transform.position;
+                Instantiate(testUnit, newPosition, transform.rotation);
                 canCreate = false;
             }
         }
