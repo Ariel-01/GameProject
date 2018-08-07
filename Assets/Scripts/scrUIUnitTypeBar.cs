@@ -6,11 +6,17 @@ using UnityEngine.UI;
 public class scrUIUnitTypeBar : MonoBehaviour {
 
     private int imageIndex = 0;
+    public int ImageIndex
+    {
+        get { return imageIndex; }
+        set { imageIndex = value; }
+    }
     private bool canMove = true;
-    private float timer; 
-
-    public Sprite[] imageArray = new Sprite[3];
+    private float timer;
+    
     const float DELAY = 0.25f;
+    public Sprite[] imageArray = new Sprite[3];
+    public GameObject player; 
 
     // Use this for initialization
     void Start () {
